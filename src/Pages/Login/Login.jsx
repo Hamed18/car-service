@@ -1,12 +1,15 @@
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import img from '../../assets/images/login/login.svg'
 import { useContext } from 'react';
 import { AuthContext } from '../../providers/AuthProvider';
 import axios from 'axios';
 
 const Login = () => {
-
     const { signIn } = useContext(AuthContext);
+    const location = useLocation();
+ //   console.log(location);  // browser console will show the pathname,state of login page
+    
+    const navigate = useNavigate();
 
     const handleLogin = event => {
         event.preventDefault();
@@ -19,7 +22,8 @@ const Login = () => {
                 const loggedInUser = result.user;
                 console.log(loggedInUser);
                 const user = {email};
-                // navigate();
+               // auth redirect 
+                navigate(location?.state? location?.state : '/');  // replace:true  if u want not to store in history
 
                 // get access token
                 axios.post('http://localhost:4000/jwt',user,{withCredentials:true})
