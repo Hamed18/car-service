@@ -24,7 +24,7 @@ const Login = () => {
                 const user = {email};
 
                 // get access token
-                axios.post('http://localhost:4000/jwt',user,{withCredentials:true})
+                axios.post('http://localhost:4000/jwt', user, {withCredentials : true})
                 .then(res => {
                     console.log(res.data);  // check in browser console browser if the req is sent or not
                     if (res.data.success){
