@@ -1,6 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../providers/AuthProvider";
 import BookingRow from "./BookingRow";
+import axios from "axios";
 
 const Bookings = () => {
     const { user } = useContext(AuthContext);
@@ -8,9 +9,13 @@ const Bookings = () => {
 
     const url = `http://localhost:4000/bookings?email=${user?.email}`;
     useEffect(() => {
-        fetch(url)
-            .then(res => res.json())
-            .then(data => setBookings(data))
+        // fetch(url)
+        //     .then(res => res.json())
+        //     .then(data => setBookings(data))
+        axios.get(url)
+        .then(res => {
+            setBookings(res.data);
+        })
     }, [url]);  // when user click in 'Please Confirm' button in BookingRow component, useEffect automatically load the api again.
 
     const handleDelete = id => {

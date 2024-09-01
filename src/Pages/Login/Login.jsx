@@ -22,13 +22,15 @@ const Login = () => {
                 const loggedInUser = result.user;
                 console.log(loggedInUser);
                 const user = {email};
-               // auth redirect 
-                navigate(location?.state? location?.state : '/');  // replace:true  if u want not to store in history
 
                 // get access token
                 axios.post('http://localhost:4000/jwt',user,{withCredentials:true})
                 .then(res => {
                     console.log(res.data);  // check in browser console browser if the req is sent or not
+                    if (res.data.success){
+                        // auth redirect: if server send the token and client recieved it, then only redirect
+                        navigate(location?.state? location?.state : '/');  // replace:true  if u want not to store in history
+                    }
                 })
             })
             .catch(error => console.log(error));
